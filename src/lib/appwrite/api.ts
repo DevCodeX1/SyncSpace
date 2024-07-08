@@ -1,6 +1,7 @@
 import { ID, Query, ImageGravity } from "appwrite";
 import { appwriteConfig, account, databases, storage, avatars } from "./config";
 import { IUpdatePost, INewPost, INewUser, IUpdateUser } from "@/types";
+import axios, { AxiosError } from "axios";
 
 // ============================================================
 // AUTH
@@ -60,7 +61,10 @@ export async function saveUserToDB(user: {
 // ============================== SIGN IN
 export async function signInAccount(user: { email: string; password: string }) {
   try {
-    const session = await account.createEmailPasswordSession(user.email, user.password);
+    const session = await account.createEmailPasswordSession(
+      user.email,
+      user.password
+    );
 
     return session;
   } catch (error) {
@@ -543,3 +547,45 @@ export async function updateUser(user: IUpdateUser) {
     console.log(error);
   }
 }
+
+const API_BASE_URL = "https://cloud.appwrite.io/v1"; // Replace with your actual API base URL
+
+
+// Follow a user
+export const followUser = async (userId: string) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/users/follow`, {
+      userId,
+    });
+    return response.data; // Handle response as needed
+  } catch (error) {
+    throw new Error(`Failed to follow user: ${(error as Error).message}`);
+  }
+};
+
+
+// Unfollow a user
+export const unfollowUser = async (userId: string) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/users/unfollow`, {
+      userId,
+    });
+    return response.data;
+  } catch (error) {
+    handleAPIError(error);
+    throw new Error(`Failed to unfollow user: ${(error as Error).message}`);
+  }
+};
+
+ // Function to handle API errors and type assertion
+const handleAPIError = (error: any) => {
+    if (axios.isAxiosError(error)) {
+      const axiosError = error as AxiosError;
+      console.error("Request failed with status", axiosError.response?.status);
+      console.error("Error data:", axiosError.response?.data);
+      // Handle specific error cases here
+    } else {
+      console.error("An unexpected error occurred:", error);
+      // Handle other types of errors here
+    }
+};

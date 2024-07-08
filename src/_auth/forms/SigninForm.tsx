@@ -2,20 +2,14 @@ import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { Link, useNavigate } from "react-router-dom"
 import { zodResolver } from "@hookform/resolvers/zod"
-
-
-
-import {Form,FormControl,FormField,FormItem,FormLabel,FormMessage,} from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import Loader from "@/components/shared/Loader"
 import { useToast } from "@/components/ui/use-toast"
-
 import { SigninValidation } from "@/lib/validation"
-
 import { useUserContext } from "@/context/AuthContext"
 import { useSignInAccount } from "@/lib/react-query/queries"
-
+import {Form,FormControl,FormField,FormItem,FormLabel,FormMessage,} from "@/components/ui/form"
 
 const SigninForm = () => {
   const { toast } = useToast()
@@ -32,7 +26,6 @@ const SigninForm = () => {
       password: "",
     },
   })
-
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof SigninValidation>) {
@@ -53,9 +46,6 @@ const SigninForm = () => {
       } else {
         return toast({title: "Signin failed, please try again."})
       }
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    
   }
 
   return (
