@@ -17,6 +17,7 @@ const Saved = () => {
 
   return (
     <div className="saved-container">
+      <img src="/assets/images/egal.svg" alt="" className="w-96"/>
       <div className="flex gap-2 w-full max-w-5xl">
         <img
           src="/assets/icons/save.svg"
