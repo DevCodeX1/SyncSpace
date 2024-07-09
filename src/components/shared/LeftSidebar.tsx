@@ -49,7 +49,7 @@ const LeftSidebar = () => {
             />
             <div className="flex flex-col">
               <p className="body-bold">{user.name}</p>
-              <p className="small-regular text-light-3">@{user.username}</p>
+              <p className="small-regular text-blue-600">@{user.username}</p>
             </div>
           </Link>
         )}
@@ -62,7 +62,7 @@ const LeftSidebar = () => {
               <li
                 key={link.label}
                 className={`leftsidebar-link group ${
-                  isActive && "bg-primary-500"
+                  isActive && "bg-blue-400"
                 }`}>
                 <NavLink
                   to={link.route}
